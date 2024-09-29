@@ -66,7 +66,8 @@ type generalAction struct {
 func (q *Queue) Tasks() []*Task {
 	tasks := make([]*Task, len(q.Raw.Items))
 	for i, t := range q.Raw.Items {
-		tasks[i] = &Task{Jenkins: q.Jenkins, Queue: q, Raw: &t}
+		tt := t
+		tasks[i] = &Task{Jenkins: q.Jenkins, Queue: q, Raw: &tt}
 	}
 	return tasks
 }
@@ -103,7 +104,7 @@ func (t *Task) Cancel() (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	return response.StatusCode == 200, nil
+	return response.StatusCode == 200 || response.StatusCode == 204, nil
 }
 
 func (t *Task) GetJob() (*Job, error) {
