@@ -1,4 +1,4 @@
-module github.com/bndr/gojenkins
+module github.com/sandwich-go/gojenkins
 
 go 1.22.1
 
