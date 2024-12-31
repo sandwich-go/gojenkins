@@ -27,6 +27,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // Request Methods
@@ -147,7 +148,10 @@ func (r *Requester) Do(ar *APIRequest, responseStruct interface{}, options ...in
 	if !strings.HasSuffix(ar.Endpoint, "/") && ar.Method != "POST" {
 		ar.Endpoint += "/"
 	}
-
+	start := time.Now()
+	defer func() {
+		fmt.Printf("[jenkins] host:%s request endpoint:%s method:%s time:%v\n", r.Base, ar.Endpoint+ar.Suffix, ar.Method, time.Since(start))
+	}()
 	fileUpload := false
 	var files []string
 	URL, err := url.Parse(r.Base + ar.Endpoint + ar.Suffix)
