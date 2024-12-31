@@ -150,7 +150,7 @@ func (r *Requester) Do(ar *APIRequest, responseStruct interface{}, options ...in
 	}
 	start := time.Now()
 	defer func() {
-		fmt.Printf(`{"ts":"%s","msg":"[jenkins] method:%s host:%s%s time:%v}"\n`, time.Now().Format(time.RFC3339), ar.Method, r.Base, ar.Endpoint+ar.Suffix, time.Since(start))
+		fmt.Printf(`{"ts":"%s","msg":"[jenkins] method:%s host:%s%s time:%v}"`, time.Now().Format(time.RFC3339), ar.Method, r.Base, ar.Endpoint+ar.Suffix, time.Since(start))
 	}()
 	fileUpload := false
 	var files []string
