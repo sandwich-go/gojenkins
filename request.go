@@ -61,8 +61,10 @@ type Requester struct {
 
 func (r *Requester) SetCrumb(ar *APIRequest) error {
 	crumbData := map[string]string{}
-	response, _ := r.GetJSON("/crumbIssuer/api/json", &crumbData, nil)
-
+	response, err := r.GetJSON("/crumbIssuer/api/json", &crumbData, nil)
+	if err != nil {
+		return fmt.Errorf("failed to get crumb: %w", err)
+	}
 	if response.StatusCode == 200 && crumbData["crumbRequestField"] != "" {
 		ar.SetHeader(crumbData["crumbRequestField"], crumbData["crumb"])
 		ar.SetHeader("Cookie", response.Header.Get("set-cookie"))
